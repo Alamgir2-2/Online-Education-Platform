@@ -21,6 +21,7 @@ const Header = () => {
           <Link to="/contact" className="hover:text-gray-400 pr-2">Contact</Link>
           <Link to="/course-player" className="hover:text-gray-400">Course Player</Link>
           <Link to="/instructor" className="hover:text-gray-400">Instructor</Link>
+          <Link to="/student" className="hover:text-gray-400">Student</Link>
         </nav>
         <div className="hidden md:flex items-center space-x-4">
           <input type="text" placeholder="Search..." className="p-2 rounded bg-gray-700 text-white" />
