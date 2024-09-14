@@ -8,7 +8,7 @@ const SignupPage = () => {
 
     return (
         <div className="flex justify-center mt-36">
-            <div className="w-full max-w-lg p-8 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+            <div className="w-full max-w-lg p-8 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg">
                 <h2 className="text-5xl text-white font-bold mb-8 text-center">Sign Up</h2>
                 <form>
                     <div className="mb-6 flex items-center">
@@ -52,7 +52,7 @@ const SignupPage = () => {
                             id="role" 
                             value={role} 
                             onChange={(e) => setRole(e.target.value)} 
-                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400"
                         >
                             <option value="">Select Role</option>
                             <option value="student">Student</option>

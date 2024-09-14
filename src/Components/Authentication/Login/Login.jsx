@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -22,12 +22,12 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
-                <h2 className="text-5xl text-black font-bold mb-8 text-center">Log In</h2>
+        <div className="flex justify-center mt-36">
+            <div className="w-full max-w-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg shadow-lg">
+                <h2 className="text-5xl text-white font-bold mb-8 text-center">Log In</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-6 flex items-center">
-                        <label htmlFor="email" className="block text-gray-700 text-lg font-bold w-1/3">
+                        <label htmlFor="email" className="block text-gray-200 text-lg font-bold w-1/3">
                             Email
                         </label>
                         <input 
@@ -35,13 +35,13 @@ const LoginPage = () => {
                             id="email" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-2/3 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                             placeholder="Enter your email"
                             required
                         />
                     </div>
                     <div className="mb-6 flex items-center">
-                        <label htmlFor="password" className="block text-gray-700 text-lg font-bold w-1/3">
+                        <label htmlFor="password" className="block text-gray-200 text-lg font-bold w-1/3">
                             Password
                         </label>
                         <input 
@@ -49,20 +49,20 @@ const LoginPage = () => {
                             id="password" 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-2/3 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                             placeholder="Enter your password"
                             required
                         />
                     </div>
                     <div className="mb-6 flex items-center">
-                        <label htmlFor="role" className="block text-gray-700 text-lg font-bold w-1/3">
+                        <label htmlFor="role" className="block text-gray-200 text-lg font-bold w-1/3">
                             Role
                         </label>
                         <select 
                             id="role" 
                             value={role} 
                             onChange={(e) => setRole(e.target.value)} 
-                            className="w-2/3 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400"
                             required
                         >
                             <option value="">Select Role</option>
@@ -80,9 +80,9 @@ const LoginPage = () => {
                         </button>
                     </div>
                 </form>
-                <p className="text-center text-gray-600 text-lg mt-6">
+                <p className="text-center text-gray-200 text-lg mt-6">
                     Don't have an account? 
-                    <a href="/signup" className="text-blue-900 hover:text-blue-700 font-bold"> Sign Up</a>
+                    <Link to="/signup" className="text-blue-500 hover:text-blue-700 font-bold"> Log in</Link>
                 </p>
             </div>
         </div>
