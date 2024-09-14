@@ -26,45 +26,45 @@ const instructor = {
 const InstructorProfilePage = () => {
   return (
     <>
-    <div className="flex py-20">
+    <div className="flex flex-col lg:flex-row py-20 px-4 lg:px-0">
       {/* Left Sidebar - Instructor Profile */}
-      <div className="w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mr-4">
-        <div className="flex items-center mb-6">
+      <div className="w-full lg:w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mb-4 lg:mb-0 lg:mr-4 flex-shrink-0">
+        <div className="text-center mb-6">
           <img
             src={man}
             alt="Instructor"
-            className="rounded-full w-32 h-32"
+            className="rounded-full w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto"
           />
-          <div className="ml-4">
+          <div className="mt-4">
             <h1 className="text-xl font-bold text-white">{instructor.name}</h1>
             <p className="text-gray-200">{instructor.email}</p>
             <p className="text-gray-300">Rank: {instructor.rank}</p>
             <p className="text-gray-300">Views: {instructor.views}</p>
           </div>
         </div>
-        <h2 className="text-lg font-semibold mb-2">Progress</h2>
-        <p className="text-white">Track your courses and student engagement.</p>
+        <h2 className="text-lg font-semibold mb-2 text-white">Progress</h2>
+        <p className="text-white text-center">Track your courses and student engagement.</p>
       </div>
 
       {/* Center Section - Dashboard and Courses */}
-      <div className="flex-grow bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mr-4">
-        <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
-        <h3 className="text-xl font-semibold mb-2">Your Courses</h3>
+      <div className="flex-grow bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mb-4 lg:mb-0 lg:mr-4">
+        <h2 className="text-2xl font-semibold mb-4 text-white">Dashboard</h2>
+        <h3 className="text-xl font-semibold mb-2 text-white">Your Courses</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {instructor.courses.map((course, index) => (
             <div key={index} className="bg-gray-700 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
               <img src={course.image} alt={course.title} className="w-full h-32 object-cover rounded-lg mb-2" />
-              <h3 className="text-lg font-semibold">{course.title}</h3>
-              <p className="text-gray-500">{course.description}</p>
-              <Link to={`/courses/${index}`} className="text-blue-600 hover:underline mt-2 inline-block">View Course</Link>
+              <h3 className="text-lg font-semibold text-white">{course.title}</h3>
+              <p className="text-gray-400">{course.description}</p>
+              <Link to={`/courses/${index}`} className="text-blue-400 hover:underline mt-2 inline-block">View Course</Link>
             </div>
           ))}
         </div>
       </div>
 
       {/* Right Sidebar - Other Options */}
-      <div className="w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
-        <h2 className="text-lg font-semibold mb-4">Dashboard Options</h2>
+      <div className="w-full lg:w-1/6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+        <h2 className="text-lg font-semibold mb-4 text-white">Dashboard Options</h2>
         <Link to="/manage-courses" className="block bg-green-300 p-4 rounded-lg mb-2 shadow hover:bg-green-500 transition duration-300">
           Manage Courses
         </Link>
@@ -81,14 +81,10 @@ const InstructorProfilePage = () => {
           Track Student Progress
         </Link>
       </div>
-      
-      
     </div>
     <Footer></Footer>
     </>
-    
   );
-
 };
 
 export default InstructorProfilePage;
