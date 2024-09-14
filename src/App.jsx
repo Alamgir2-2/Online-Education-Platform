@@ -10,6 +10,7 @@ import InstructorProfilePage from './Components/Instructor/InstrutcorProfile/InP
 import BlogSection from './Components/Blogs/BlogSection'
 import CourseSection from './Components/Courses/CourseSection'
 import CreateNewCourse from './Components/Courses/CreateNewCourse'
+import CreateBlogPage from './Components/Blogs/CreateBlogPage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,7 @@ function App() {
           <Route path='/courses' element={<CourseSection></CourseSection>}/>
           <Route path="/instructor" element={<InstructorProfilePage></InstructorProfilePage>} />
           <Route path="/new-course" element={<CreateNewCourse></CreateNewCourse>} />
+          <Route path="/write-blog" element={<CreateBlogPage></CreateBlogPage>} />
         </Routes>
         {/* <Routes>
           <Route path="/" element={<HomePage />} />
