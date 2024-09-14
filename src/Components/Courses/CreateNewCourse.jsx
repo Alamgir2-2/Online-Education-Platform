@@ -1,166 +1,224 @@
 import React, { useState } from 'react';
-import { FiUploadCloud, FiCheckCircle } from 'react-icons/fi'; // Added icons
+import { FiUploadCloud, FiCheckCircle, FiXCircle } from 'react-icons/fi'; // Added FiXCircle for close icon
 
 const CreateCoursePage = () => {
   const [formData, setFormData] = useState({
     courseTitle: '',
     description: '',
-    videos: [],
-    videoTitle: '',
-    videoFile: null,
-    videoLength: '',
-    questions: [],
-    question: '',
-    options: ['', '', '', ''],
-    correctOption: '',
+    milestones: [
+      {
+        title: '',
+        videos: [],
+      },
+    ],
   });
 
+  // Handle form input change
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const videoLength = '10 mins'; // Video length calculation logic here
-      setFormData({
-        ...formData,
-        videoFile: file,
-        videoLength,
-      });
-    }
+  // Handle milestone input change
+  const handleMilestoneChange = (index, e) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[index][e.target.name] = e.target.value;
+    setFormData({ ...formData, milestones: newMilestones });
   };
 
-  const handleAddQuestion = () => {
+  // Add new milestone
+  const handleAddMilestone = () => {
     setFormData({
       ...formData,
-      questions: [...formData.questions, { question: formData.question, options: formData.options, correctOption: formData.correctOption }],
+      milestones: [...formData.milestones, { title: '', videos: [] }],
+    });
+  };
+
+  // Remove milestone
+  const handleRemoveMilestone = (index) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones.splice(index, 1);
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  // Add video to a milestone
+  const handleAddVideo = (index) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[index].videos.push({ title: '', file: null, questions: [] });
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  // Remove video from a milestone
+  const handleRemoveVideo = (milestoneIndex, videoIndex) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos.splice(videoIndex, 1);
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  const handleVideoTitleChange = (milestoneIndex, videoIndex, e) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].title = e.target.value;
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  const handleVideoFileChange = (milestoneIndex, videoIndex, e) => {
+    const file = e.target.files[0];
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].file = file;
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  const handleAddQuestion = (milestoneIndex, videoIndex) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].questions.push({
       question: '',
       options: ['', '', '', ''],
       correctOption: '',
     });
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  const handleQuestionChange = (milestoneIndex, videoIndex, questionIndex, e) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].questions[questionIndex][e.target.name] = e.target.value;
+    setFormData({ ...formData, milestones: newMilestones });
+  };
+
+  const handleOptionChange = (milestoneIndex, videoIndex, questionIndex, optionIndex, e) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].questions[questionIndex].options[optionIndex] = e.target.value;
+    setFormData({ ...formData, milestones: newMilestones });
   };
 
   return (
-    <div className=" p-10 mt-20">
+    <div className="p-10 mt-20">
       <div className="max-w-4xl mx-auto space-y-10">
         {/* Course Details Section */}
         <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
           <h2 className="text-3xl font-bold text-white mb-6">Create a New Course</h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div>
-              <label className="text-white">Course Title</label>
-              <input
-                type="text"
-                name="courseTitle"
-                value={formData.courseTitle}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Enter course title"
-              />
-            </div>
-            <div>
-              <label className="text-white">Course Description</label>
-              <input
-              type='text'
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Enter course description"
-              />
-            </div>
+          <div>
+            <label className="text-white">Course Title</label>
+            <input
+              type="text"
+              name="courseTitle"
+              value={formData.courseTitle}
+              onChange={handleInputChange}
+              className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="Enter course title"
+            />
           </div>
         </div>
 
-        {/* Video Upload Section */}
-        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
-          <h2 className="text-2xl font-bold text-white mb-6">Upload Videos</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="text-white">Video Title</label>
-              <input
-                type="text"
-                name="videoTitle"
-                value={formData.videoTitle}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Enter video title"
-              />
-            </div>
-            <div className="border-dashed border-4 border-teal-400 py-6 px-4 rounded-lg flex justify-center items-center text-white">
-              <label className="cursor-pointer flex items-center space-x-3">
-                <FiUploadCloud className="text-3xl" />
-                <input
-                  type="file"
-                  name="videoFile"
-                  onChange={handleVideoUpload}
-                  className="hidden"
-                />
-                <span>{formData.videoFile ? formData.videoFile.name : "Upload Video File"}</span>
-              </label>
-            </div>
-            {formData.videoLength && (
-              <p className="text-teal-400 mt-2">Video Length: {formData.videoLength}</p>
-            )}
-          </div>
-        </div>
+        {/* Milestones and Videos */}
+        {formData.milestones.map((milestone, milestoneIndex) => (
+          <div key={milestoneIndex} className="relative bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+            {/* Close button for Milestone */}
+            <button
+              onClick={() => handleRemoveMilestone(milestoneIndex)}
+              className="absolute top-4 right-4 text-red-500 hover:text-red-700"
+            >
+              <FiXCircle className="text-2xl" />
+            </button>
 
-        {/* Questions Section */}
-        <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
-          <h2 className="text-2xl font-bold text-white mb-6">Add Questions (Multiple Choice)</h2>
-          <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-white mb-4">Milestone {milestoneIndex + 1}</h3>
             <div>
-              <label className="text-white">Question</label>
+              <label className="text-white">Milestone Title</label>
               <input
                 type="text"
-                name="question"
-                value={formData.question}
-                onChange={handleInputChange}
+                name="title"
+                value={milestone.title}
+                onChange={(e) => handleMilestoneChange(milestoneIndex, e)}
                 className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Enter question"
+                placeholder="Enter milestone title"
               />
             </div>
-            {formData.options.map((option, index) => (
-              <div key={index}>
-                <label className="text-white">Option {index + 1}</label>
+
+            {milestone.videos.map((video, videoIndex) => (
+              <div key={videoIndex} className="relative mt-4 bg-white bg-opacity-10 p-4 rounded-lg">
+                {/* Close button for Video */}
+                <button
+                  onClick={() => handleRemoveVideo(milestoneIndex, videoIndex)}
+                  className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                >
+                  <FiXCircle className="text-xl" />
+                </button>
+
+                <label className="text-white">Video Title</label>
                 <input
                   type="text"
-                  name={`option${index}`}
-                  value={formData.options[index]}
-                  onChange={(e) => {
-                    const newOptions = [...formData.options];
-                    newOptions[index] = e.target.value;
-                    setFormData({ ...formData, options: newOptions });
-                  }}
+                  name="videoTitle"
+                  value={video.title}
+                  onChange={(e) => handleVideoTitleChange(milestoneIndex, videoIndex, e)}
                   className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  placeholder={`Enter option ${index + 1}`}
+                  placeholder="Enter video title"
                 />
+                <div className="border-dashed border-4 border-teal-400 py-6 px-4 rounded-lg mt-2 text-white">
+                  <label className="cursor-pointer flex items-center space-x-3">
+                    <FiUploadCloud className="text-3xl" />
+                    <input
+                      type="file"
+                      onChange={(e) => handleVideoFileChange(milestoneIndex, videoIndex, e)}
+                      className="hidden"
+                    />
+                    <span>{video.file ? video.file.name : 'Upload Video'}</span>
+                  </label>
+                </div>
+
+                {/* Questions Section for Each Video */}
+                <div className="mt-6">
+                  <h4 className="text-xl font-bold text-white mb-4">Add Questions for this Video</h4>
+                  {video.questions.map((question, questionIndex) => (
+                    <div key={questionIndex} className="mb-4">
+                      <label className="text-white">Question {questionIndex + 1}</label>
+                      <input
+                        type="text"
+                        name="question"
+                        value={question.question}
+                        onChange={(e) => handleQuestionChange(milestoneIndex, videoIndex, questionIndex, e)}
+                        className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        placeholder="Enter question"
+                      />
+                      {question.options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="mt-2">
+                          <label className="text-white">Option {optionIndex + 1}</label>
+                          <input
+                            type="text"
+                            value={option}
+                            onChange={(e) => handleOptionChange(milestoneIndex, videoIndex, questionIndex, optionIndex, e)}
+                            className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                            placeholder={`Enter option ${optionIndex + 1}`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => handleAddQuestion(milestoneIndex, videoIndex)}
+                    className="bg-teal-500 mt-4 p-3 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
+                  >
+                    Add Question <FiCheckCircle className="ml-2 inline" />
+                  </button>
+                </div>
               </div>
             ))}
-            <div>
-              <label className="text-white">Correct Option</label>
-              <input
-                type="text"
-                name="correctOption"
-                value={formData.correctOption}
-                onChange={handleInputChange}
-                className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                placeholder="Enter correct option"
-              />
-            </div>
+
+            <button
+              onClick={() => handleAddVideo(milestoneIndex)}
+              className="bg-teal-500 mt-4 p-3 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
+            >
+              Add Video <FiUploadCloud className="ml-2 inline" />
+            </button>
           </div>
-          <button
-            onClick={handleAddQuestion}
-            className="bg-teal-500 mt-4 p-3 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
-          >
-            Add Question
-            <FiCheckCircle className="ml-2 inline" />
-          </button>
-        </div>
+        ))}
+
+        <button
+          onClick={handleAddMilestone}
+          className="bg-teal-500 mt-6 p-4 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
+        >
+          Add Milestone
+        </button>
 
         {/* Submit Button */}
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-8">
           <button className="bg-teal-500 p-4 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200">
             Create Course
           </button>
