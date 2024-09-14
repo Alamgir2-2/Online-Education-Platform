@@ -28,7 +28,7 @@ const InstructorProfilePage = () => {
     <>
     <div className="flex py-20">
       {/* Left Sidebar - Instructor Profile */}
-      <div className="w-1/4 bg-gray-900 shadow-lg rounded-lg p-6 mr-4">
+      <div className="w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mr-4">
         <div className="flex items-center mb-6">
           <img
             src={man}
@@ -47,7 +47,7 @@ const InstructorProfilePage = () => {
       </div>
 
       {/* Center Section - Dashboard and Courses */}
-      <div className="flex-grow bg-gray-900 shadow-lg rounded-lg p-6 mr-4">
+      <div className="flex-grow bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mr-4">
         <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
         <h3 className="text-xl font-semibold mb-2">Your Courses</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -63,7 +63,7 @@ const InstructorProfilePage = () => {
       </div>
 
       {/* Right Sidebar - Other Options */}
-      <div className="w-1/4 bg-gray-900 shadow-lg rounded-lg p-6">
+      <div className="w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
         <h2 className="text-lg font-semibold mb-4">Dashboard Options</h2>
         <Link to="/manage-courses" className="block bg-green-300 p-4 rounded-lg mb-2 shadow hover:bg-green-500 transition duration-300">
           Manage Courses
