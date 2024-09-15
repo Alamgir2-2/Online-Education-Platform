@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import algo from '../../../assets/CourseImage/algo.png'
 import python from '../../../assets/CourseImage/python.png'
 import cprogram from '../../../assets/CourseImage/cprogram.jpeg'
+import man from '../../../assets/man.webp'
 import Footer from '../../Layout/Footer/Footer';
 
 // Dummy student data
@@ -27,7 +28,7 @@ const StudentDashboard = () => {
       <div className="w-full lg:w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mb-4 lg:mb-0 lg:mr-4 flex-shrink-0">
         <div className="text-center mb-6">
           <img
-            src="https://via.placeholder.com/150"
+            src={man}
             alt="Student Avatar"
             className="rounded-full w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto"
           />
