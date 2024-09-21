@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from "../../../../public/logo.png"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ const Header = () => {
   return (
     <header className=" bg-opacity-75 backdrop-blur-md text-white p-4 fixed w-full top-0 left-0 z-50 shadow-md">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold">LMS Logo</Link>
+        <Link to="/" className="text-2xl font-bold"><img className="h-12 w-auto" src={logo} alt="" /></Link>
         <nav className="hidden md:flex space-x-4">
           <Link to="/" className="hover:text-gray-400 pl-2">Home</Link>
           <Link to="/courses" className="hover:text-gray-400">Courses</Link>
