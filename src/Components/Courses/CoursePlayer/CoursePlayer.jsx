@@ -126,7 +126,7 @@ const CoursePlayer = () => {
         <div className="mt-4 text-white">
           <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
           <p className="text-sm">{selectedVideo.description}</p>
-          <p className="text-sm">Duration: {videoDuration ? `${Math.floor(videoDuration / 60)}:${Math.floor(videoDuration % 60).toString().padStart(2, '0')}` : 'Loading...'}</p>
+          {/* <p className="text-sm">Duration: {videoDuration ? `${Math.floor(videoDuration / 60)}:${Math.floor(videoDuration % 60).toString().padStart(2, '0')}` : 'Loading...'}</p> */}
         </div>
       </div>
 
