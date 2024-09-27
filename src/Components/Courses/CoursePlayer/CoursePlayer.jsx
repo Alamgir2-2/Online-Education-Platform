@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FaLock, FaPlay } from 'react-icons/fa'; // Importing icons from react-icons
+import { ToastContainer, toast } from 'react-toastify'; // Import toast for notifications
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 
 const milestones = [
   {
@@ -7,8 +9,8 @@ const milestones = [
     duration: '2 h 16 m',
     completed: '14/14',
     videos: [
-      { title: 'Welcome to Complete Web Development Course', duration: '11 min', src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', description: 'An introduction to the complete web development course.' },
-      { title: 'Orientation Video', duration: '14 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Overview of the course structure and expectations.' },
+      { title: 'Welcome to Complete Web Development Course', duration: '11 min', src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', description: 'An introduction to the complete web development course.', question: 'What is Web Development?', options: ['Creating websites', 'Cooking', 'Gardening', 'Painting'], answer: 0 },
+      { title: 'Orientation Video', duration: '14 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Overview of the course structure and expectations.', question: 'What is the structure of this course?', options: ['HTML', 'CSS', 'JavaScript', 'All of the above'], answer: 3 },
     ],
   },
   {
@@ -16,8 +18,8 @@ const milestones = [
     duration: '10 h 35 m',
     completed: '68/68',
     videos: [
-      { title: 'Introduction to HTML', duration: '15 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Learn the basics of HTML and its structure.' },
-      { title: 'Introduction to CSS', duration: '12 min', src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', description: 'Understanding CSS and how to style HTML.' },
+      { title: 'Introduction to HTML', duration: '15 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Learn the basics of HTML and its structure.', question: 'What does HTML stand for?', options: ['Hyper Text Markup Language', 'High Text Markup Language', 'Hyper Tabular Markup Language', 'None of the above'], answer: 0 },
+      { title: 'Introduction to CSS', duration: '12 min', src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', description: 'Understanding CSS and how to style HTML.', question: 'What does CSS stand for?', options: ['Cascading Style Sheets', 'Colorful Style Sheets', 'Creative Style Sheets', 'Computer Style Sheets'], answer: 0 },
     ],
   },
 ];
@@ -29,7 +31,10 @@ const CoursePlayer = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentMilestoneIndex, setCurrentMilestoneIndex] = useState(0);
   const [watchedVideos, setWatchedVideos] = useState(new Set()); // Track watched videos
+  const [questionVisible, setQuestionVisible] = useState(false);
+  const [userAnswer, setUserAnswer] = useState(null);
   const videoRef = useRef(null);
+  const [canProceed, setCanProceed] = useState(false);
 
   const handleVideoLoadedMetadata = () => {
     if (videoRef.current) {
@@ -39,6 +44,18 @@ const CoursePlayer = () => {
 
   const toggleMilestone = (index) => {
     setExpandedMilestone(expandedMilestone === index ? null : index);
+  };
+
+  const handleAnswer = (index) => {
+    setUserAnswer(index); // Store the user's answer
+    if (index === selectedVideo.answer) {
+      toast.success('Correct Answer'); // Show success toast
+      // handleNextVideo(); // Unlock the next video immediately
+      setCanProceed(true); // Enable the Next button
+    } else {
+      toast.error('Wrong Answer'); // Show error toast
+      setCanProceed(false); // Keep the Next button disabled
+    }
   };
 
   const handleNextVideo = () => {
@@ -55,7 +72,7 @@ const CoursePlayer = () => {
         newMilestoneIndex = milestones.length - 1; // Stay at the last milestone
         newVideoIndex = milestones[newMilestoneIndex].videos.length - 1; // Stay at the last video of the last milestone
       }
-      
+
       // Expand the next milestone
       setExpandedMilestone(newMilestoneIndex);
     }
@@ -63,6 +80,8 @@ const CoursePlayer = () => {
     setSelectedVideo(milestones[newMilestoneIndex].videos[newVideoIndex]);
     setCurrentVideoIndex(newVideoIndex);
     setCurrentMilestoneIndex(newMilestoneIndex);
+    setQuestionVisible(false); // Reset question visibility
+    setUserAnswer(null); // Reset user answer
   };
 
   const handlePreviousVideo = () => {
@@ -78,6 +97,8 @@ const CoursePlayer = () => {
     setSelectedVideo(milestones[newMilestoneIndex].videos[newVideoIndex]);
     setCurrentVideoIndex(newVideoIndex);
     setCurrentMilestoneIndex(newMilestoneIndex);
+    setQuestionVisible(false); // Reset question visibility
+    setUserAnswer(null); // Reset user answer
   };
 
   const handleVideoEnd = () => {
@@ -85,7 +106,10 @@ const CoursePlayer = () => {
     const updatedWatchedVideos = new Set(watchedVideos);
     updatedWatchedVideos.add(selectedVideo.title);
     setWatchedVideos(updatedWatchedVideos);
+    setQuestionVisible(true); // Show question when the video ends
   };
+
+
 
   return (
     <div className="flex mt-20 gap-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
@@ -110,24 +134,52 @@ const CoursePlayer = () => {
           <button
             onClick={handlePreviousVideo}
             className="bg-purple-600 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded"
+            disabled={currentVideoIndex === 0} // Disable if first video
           >
             Previous
           </button>
           <button
             onClick={handleNextVideo}
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
-            disabled={!watchedVideos.has(selectedVideo.title)} // Disable if current video isn't watched
+            disabled={!watchedVideos.has(selectedVideo.title) || !canProceed} // Disable if current video isn't watched or canProceed is false
           >
             Next
           </button>
+
+          {/* <button
+            onClick={handleNextVideo}
+            className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            disabled={!watchedVideos.has(selectedVideo.title) || (currentMilestoneIndex === milestones.length - 1 && currentVideoIndex === milestones[currentMilestoneIndex].videos.length - 1)} // Disable if current video isn't watched or is the last video
+          >
+            Next
+          </button> */}
+
         </div>
 
         {/* Video Title and Description */}
         <div className="mt-4 text-white">
           <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
           <p className="text-sm">{selectedVideo.description}</p>
-          {/* <p className="text-sm">Duration: {videoDuration ? `${Math.floor(videoDuration / 60)}:${Math.floor(videoDuration % 60).toString().padStart(2, '0')}` : 'Loading...'}</p> */}
         </div>
+
+        {/* Question Section */}
+        {questionVisible && (
+          <div className="mt-4 text-white">
+            <h3 className="text-lg font-bold">{selectedVideo.question}</h3>
+            <div className="flex flex-col mt-2">
+              {selectedVideo.options.map((option, index) => (
+                <button
+                  key={index}
+                  className={`p-2 rounded mt-1 ${userAnswer === index ? 'bg-gray-700' : 'bg-gray-600'} hover:bg-gray-500`}
+                  onClick={() => handleAnswer(index)}
+                // disabled={userAnswer !== null} // Disable after answering
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Right Section: Milestone List */}
@@ -167,8 +219,45 @@ const CoursePlayer = () => {
           </div>
         ))}
       </div>
+
+      <ToastContainer
+        position="top-left" // Position the toast at the top left
+        autoClose={3000} // Adjust duration as needed
+        hideProgressBar={true} // Optional: Hide the progress bar
+        closeOnClick
+        draggable
+        pauseOnHover
+        style={{ marginTop: '30%', marginLeft: '20px', zIndex: 9999 }} // Adjust margin for vertical centering and left alignment
+      />
+
+      {/* Add toast container for notifications */}
     </div>
   );
 };
 
 export default CoursePlayer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
