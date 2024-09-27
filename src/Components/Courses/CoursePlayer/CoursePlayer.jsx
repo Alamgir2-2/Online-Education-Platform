@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { FaLock, FaPlay } from 'react-icons/fa'; // Importing icons from react-icons
 import { ToastContainer, toast } from 'react-toastify'; // Import toast for notifications
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
+import Footer from '../../Layout/Footer/Footer';
 
 const milestones = [
   {
@@ -92,6 +93,7 @@ const CoursePlayer = () => {
     if (newVideoIndex < 0) {
       newMilestoneIndex = (newMilestoneIndex - 1 + milestones.length) % milestones.length;
       newVideoIndex = milestones[newMilestoneIndex].videos.length - 1;
+      setExpandedMilestone(newMilestoneIndex);
     }
 
     setSelectedVideo(milestones[newMilestoneIndex].videos[newVideoIndex]);
@@ -112,7 +114,8 @@ const CoursePlayer = () => {
 
 
   return (
-    <div className="flex mt-20 gap-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+    <>
+    <div className="flex mb-5 mt-20 gap-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
       {/* Left Section: Video Player */}
       <div className="w-3/4 flex-auto px-9">
         <div className="bg-black relative pb-[56.25%]">
@@ -134,7 +137,7 @@ const CoursePlayer = () => {
           <button
             onClick={handlePreviousVideo}
             className="bg-purple-600 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded"
-            disabled={currentVideoIndex === 0} // Disable if first video
+            disabled={currentVideoIndex === 0 && currentMilestoneIndex === 0} // Disable if first video
           >
             Previous
           </button>
@@ -164,7 +167,7 @@ const CoursePlayer = () => {
 
         {/* Question Section */}
         {questionVisible && (
-          <div className="mt-4 text-white">
+          <div className="mt-4 text-white border border-gray-500 rounded-lg p-4">
             <h3 className="text-lg font-bold">{selectedVideo.question}</h3>
             <div className="flex flex-col mt-2">
               {selectedVideo.options.map((option, index) => (
@@ -220,6 +223,10 @@ const CoursePlayer = () => {
         ))}
       </div>
 
+     
+      
+      {/* Add toast container for notifications */}
+
       <ToastContainer
         position="top-left" // Position the toast at the top left
         autoClose={3000} // Adjust duration as needed
@@ -229,9 +236,10 @@ const CoursePlayer = () => {
         pauseOnHover
         style={{ marginTop: '30%', marginLeft: '20px', zIndex: 9999 }} // Adjust margin for vertical centering and left alignment
       />
-
-      {/* Add toast container for notifications */}
-    </div>
+    
+    </div >
+    <Footer/>
+    </>
   );
 };
 
