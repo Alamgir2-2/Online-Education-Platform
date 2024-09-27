@@ -141,13 +141,27 @@ const CoursePlayer = () => {
           >
             Previous
           </button>
-          <button
+          {/* <button
             onClick={handleNextVideo}
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            className={`${
+              canProceed ? 'bg-blue-600 hover:bg-blue-500' : 'bg-gray-400'
+          } text-white font-bold py-2 px-4 rounded`}
+            // className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
             disabled={!watchedVideos.has(selectedVideo.title) || !canProceed} // Disable if current video isn't watched or canProceed is false
           >
             Next
-          </button>
+          </button> */}
+
+          <button
+              onClick={handleNextVideo}
+              className={`${watchedVideos.has(selectedVideo.title) && canProceed
+                  ? 'bg-blue-600 hover:bg-blue-500'
+                  : 'bg-gray-400'
+                } text-white font-bold py-2 px-4 rounded`}
+              disabled={!watchedVideos.has(selectedVideo.title) || !canProceed} // Disable if video not watched or answer incorrect
+            >
+              Next
+            </button>
 
           {/* <button
             onClick={handleNextVideo}
@@ -244,28 +258,3 @@ const CoursePlayer = () => {
 };
 
 export default CoursePlayer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
