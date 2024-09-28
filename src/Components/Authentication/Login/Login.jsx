@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -7,23 +8,63 @@ const LoginPage = () => {
     const [role, setRole] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Add your login logic here (e.g., API call for authentication)
-
-        // Redirect based on role after successful login
-        if (role === 'student') {
-            navigate('/student-dashboard');
-        } else if (role === 'instructor') {
-            navigate('/instructor-dashboard');
-        } else if (role === 'admin') {
-            navigate('/admin-dashboard');
+    
+        const userData = {
+            email,
+            password,
+            role
+        };
+    
+        console.log('User Data:', userData); // Log user data
+    
+        try {
+            const response = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+            if (!response.ok) {
+                const errorText = await response.text(); // Get the response as text
+                console.error('Error response:', errorText); // Log the error response
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // console.log('Response Status:', response.status); // Log response status
+            const data = await response.json();
+            console.log('Response Data:', data); // Log response data
+    
+            if (response.ok) {
+                toast.success('Login successful!');
+                setTimeout(() => {
+                    // Redirect based on role after successful login
+                    if (role === 'student') {
+                        navigate('/student-dashboard');
+                    } else if (role === 'instructor') {
+                        navigate('/instructor-dashboard');
+                    } else if (role === 'admin') {
+                        navigate('/admin-dashboard');
+                    }
+                }, 2000);
+            } else {
+                if (data.error) {
+                    toast.error(data.error); // Show specific error message from the server
+                } else {
+                    toast.error('Login failed!'); // General error message
+                }
+            }
+        } catch (error) {
+            console.error('Error during login:', error); // Log the error
+            toast.error('Error occurred during login.'); // Generic error message
         }
     };
+    
 
     return (
         <div className="flex justify-center mt-36">
-            <div className="w-full max-w-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg shadow-lg">
+            <div className="w-full max-w-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
                 <h2 className="text-5xl text-white font-bold mb-8 text-center">Log In</h2>
                 <form onSubmit={handleLogin}>
                     <div className="mb-6 flex items-center">
@@ -35,7 +76,7 @@ const LoginPage = () => {
                             id="email" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                             placeholder="Enter your email"
                             required
                         />
@@ -49,7 +90,7 @@ const LoginPage = () => {
                             id="password" 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                             placeholder="Enter your password"
                             required
                         />
@@ -62,7 +103,7 @@ const LoginPage = () => {
                             id="role" 
                             value={role} 
                             onChange={(e) => setRole(e.target.value)} 
-                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400"
+                            className="w-2/3 px-4 py-3 border bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400"
                             required
                         >
                             <option value="">Select Role</option>

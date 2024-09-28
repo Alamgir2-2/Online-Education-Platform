@@ -15,22 +15,24 @@ import ManageCoursesPage from './Components/Courses/ManageCourses/ManageCoursesP
 import EditCoursePage from './Components/Courses/ManageCourses/EditCoursePage'
 import StudentDashboard from './Components/Student/StudentDashboard/StudentDashboard'
 import StudentProfile from './Components/Student/StudentProfile/StudentProfile'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    
-      <Router>
+
+    <Router>
       <Header />
-      <main>        
+      <main>
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/course-player' element={<CoursePlayer></CoursePlayer>} />
-          <Route path='/signup' element={<Signup></Signup>}/>
-          <Route path='/login' element={<LoginPage></LoginPage>}/>
-          <Route path='/blog' element={<BlogSection></BlogSection>}/>
-          <Route path='/courses' element={<CourseSection></CourseSection>}/>
+          <Route path='/signup' element={<Signup></Signup>} />
+          <Route path='/login' element={<LoginPage></LoginPage>} />
+          <Route path='/blog' element={<BlogSection></BlogSection>} />
+          <Route path='/courses' element={<CourseSection></CourseSection>} />
           <Route path="/instructor" element={<InstructorProfilePage></InstructorProfilePage>} />
           <Route path="/student" element={<StudentDashboard></StudentDashboard>} />
           <Route path="/new-course" element={<CreateNewCourse></CreateNewCourse>} />
@@ -47,9 +49,18 @@ function App() {
           Add other routes as needed
         </Routes> */}
       </main>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick
+        draggable
+        pauseOnHover
+      />
       {/* <Footer /> */}
+
     </Router>
-    
+
   )
 }
 
