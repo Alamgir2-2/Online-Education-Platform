@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Import CORS
+import session from 'express-session'; // Import express-session
 import authRoutes from './routes/authRoutes.js';
 
 dotenv.config(); // Load environment variables
@@ -16,6 +17,14 @@ app.use(cors({
     origin: 'http://localhost:5173', // Allow your frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true // Allow credentials (if needed)
+}));
+
+// Configure the session middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET, // Use the session secret from environment variables
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Set secure to true if using HTTPS
 }));
 
 // Use the auth routes

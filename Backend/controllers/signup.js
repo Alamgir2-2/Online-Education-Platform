@@ -14,11 +14,11 @@ export const signup = async (req, res) => {
         }
 
         // Check if a user already exists with the same email but a different role
-        const [existingRole] = await db.promise().query('SELECT * FROM users WHERE email = ?', [email]);
+        // const [existingRole] = await db.promise().query('SELECT * FROM users WHERE email = ?', [email]);
 
-        if (existingRole.length > 0) {
-            return res.status(400).json({ message: `Email already used for another role. You can create an account with this email only once per role.` });
-        }
+        // if (existingRole.length > 0) {
+        //     return res.status(400).json({ message: `Email already used for another role. You can create an account with this email only once per role.` });
+        // }
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);

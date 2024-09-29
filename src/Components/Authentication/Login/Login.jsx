@@ -6,60 +6,46 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-    
-        const userData = {
-            email,
-            password,
-            role
-        };
-    
-        console.log('User Data:', userData); // Log user data
-    
-        try {
-            const response = await fetch('http://localhost:5000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
-            if (!response.ok) {
-                const errorText = await response.text(); // Get the response as text
-                console.error('Error response:', errorText); // Log the error response
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            // console.log('Response Status:', response.status); // Log response status
-            const data = await response.json();
-            console.log('Response Data:', data); // Log response data
-    
-            if (response.ok) {
-                toast.success('Login successful!');
-                setTimeout(() => {
-                    // Redirect based on role after successful login
-                    if (role === 'student') {
-                        navigate('/student-dashboard');
-                    } else if (role === 'instructor') {
-                        navigate('/instructor-dashboard');
-                    } else if (role === 'admin') {
-                        navigate('/admin-dashboard');
-                    }
-                }, 2000);
-            } else {
-                if (data.error) {
-                    toast.error(data.error); // Show specific error message from the server
+    e.preventDefault(); // Prevent form submission
+
+    try {
+        const response = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password, role }), // No need to send role from frontend for login
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            toast.success(data.message); // Display success message
+            
+            // Redirect based on user role
+            setTimeout(() => {
+                if (data.user.role === 'Instructor') {
+                    navigate('/instructor');
+                } else if (data.user.role === 'Student') {
+                    navigate('/student');
+                } else if (data.user.role === 'Admin') {
+                    navigate('/admin');
                 } else {
-                    toast.error('Login failed!'); // General error message
+                    toast.error('Unknown role.'); // Handle unexpected role
                 }
-            }
-        } catch (error) {
-            console.error('Error during login:', error); // Log the error
-            toast.error('Error occurred during login.'); // Generic error message
+            }, 1000);
+        } else {
+            toast.error(data.message || 'Login failed.'); // Display error message
         }
-    };
+    } catch (err) {
+        toast.error('Something went wrong: ' + err.message); // Handle network error
+    }
+};
+
     
 
     return (
@@ -107,17 +93,18 @@ const LoginPage = () => {
                             required
                         >
                             <option value="">Select Role</option>
-                            <option value="student">Student</option>
-                            <option value="instructor">Instructor</option>
-                            <option value="admin">Admin</option>
+                            <option value="Student">Student</option>
+                            <option value="Instructor">Instructor</option>
+                            <option value="Admin">Admin</option>
                         </select>
                     </div>
                     <div className="flex items-center justify-center">
                         <button
                             type="submit"
-                            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className={`w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            disabled={loading}
                         >
-                            Log In
+                            {loading ? 'Logging In...' : 'Log In'}
                         </button>
                     </div>
                 </form>
