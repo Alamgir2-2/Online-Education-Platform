@@ -24,12 +24,14 @@ export const login = async (req, res) => {
         }
 
         // If login is successful, save the user information to the session
-        req.session.user = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role
-        };
+        // req.session.user = {
+        //     id: user.id,
+        //     name: user.name,
+        //     email: user.email,
+        //     role: user.role
+        // };
+
+        req.session.user = user;
 
         
         req.session.save((err) => {

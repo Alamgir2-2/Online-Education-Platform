@@ -5,7 +5,7 @@ import cors from 'cors'; // Import CORS
 import session from 'express-session'; // Import express-session
 import authRoutes from './routes/authRoutes.js';
 // import instructorRoutes from './routes/instructorRoutes.js';
-import instructorRoutes from './routes/instructorRoutes.js';
+// import instructorRoutes from './routes/instructorRoutes.js';
 
 dotenv.config(); // Load environment variables
 
@@ -37,7 +37,7 @@ app.use(session({
 }));
 
 // Use the auth routes
-app.use(instructorRoutes);
+// app.use(instructorRoutes);
 app.use('/api', authRoutes); // All auth routes will be prefixed with /api
 
 // Basic route

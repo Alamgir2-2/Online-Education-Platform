@@ -4,6 +4,7 @@ import { FiUploadCloud, FiCheckCircle, FiXCircle } from 'react-icons/fi'; // Add
 const CreateCoursePage = () => {
   const [formData, setFormData] = useState({
     courseTitle: '',
+    thumbnail: null, // Added thumbnail to state
     description: '',
     milestones: [
       {
@@ -16,6 +17,12 @@ const CreateCoursePage = () => {
   // Handle form input change
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle thumbnail change
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({ ...formData, thumbnail: file });
   };
 
   // Handle milestone input change
@@ -53,6 +60,15 @@ const CreateCoursePage = () => {
     newMilestones[milestoneIndex].videos.splice(videoIndex, 1);
     setFormData({ ...formData, milestones: newMilestones });
   };
+
+// Remove question from a milestone video
+const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
+  const newMilestones = [...formData.milestones];
+  newMilestones[milestoneIndex].videos[videoIndex].questions.splice(questionIndex, 1);
+  setFormData({ ...formData, milestones: newMilestones });
+};
+
+  
 
   const handleVideoTitleChange = (milestoneIndex, videoIndex, e) => {
     const newMilestones = [...formData.milestones];
@@ -105,6 +121,22 @@ const CreateCoursePage = () => {
               className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder="Enter course title"
             />
+          </div>
+
+          {/* Course Thumbnail Section */}
+          <div className="mt-6">
+            <label className="text-white">Course Thumbnail</label>
+            <div className="border-dashed border-4 border-teal-400 py-6 px-4 rounded-lg mt-2 text-white">
+              <label className="cursor-pointer flex items-center space-x-3">
+                <FiUploadCloud className="text-3xl" />
+                <input
+                  type="file"
+                  onChange={handleThumbnailChange}
+                  className="hidden"
+                />
+                <span>{formData.thumbnail ? formData.thumbnail.name : 'Upload Thumbnail'}</span>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -163,12 +195,25 @@ const CreateCoursePage = () => {
                   </label>
                 </div>
 
+
                 {/* Questions Section for Each Video */}
                 <div className="mt-6">
                   <h4 className="text-xl font-bold text-white mb-4">Add Questions for this Video</h4>
+
                   {video.questions.map((question, questionIndex) => (
-                    <div key={questionIndex} className="mb-4">
+                    <div
+                      key={questionIndex}
+                      className="mb-4 border border-teal-500 p-4 rounded-lg relative"
+                    >
+
                       <label className="text-white">Question {questionIndex + 1}</label>
+                      {/* FiXCircle button for removing the question */}
+                      <button
+                        onClick={() => handleRemoveQuestion(milestoneIndex, videoIndex, questionIndex)}
+                        className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                      >
+                        <FiXCircle className="text-xl" />
+                      </button>
                       <input
                         type="text"
                         name="question"
@@ -177,6 +222,7 @@ const CreateCoursePage = () => {
                         className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter question"
                       />
+
                       {question.options.map((option, optionIndex) => (
                         <div key={optionIndex} className="mt-2">
                           <label className="text-white">Option {optionIndex + 1}</label>
@@ -189,8 +235,22 @@ const CreateCoursePage = () => {
                           />
                         </div>
                       ))}
+
+                      {/* Right Answer Field */}
+                      <div className="mt-4">
+                        <label className="text-white">Correct Answer</label>
+                        <input
+                          type="text"
+                          name="correctOption"
+                          value={question.correctOption}
+                          onChange={(e) => handleQuestionChange(milestoneIndex, videoIndex, questionIndex, e)}
+                          className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                          placeholder="Enter the correct answer"
+                        />
+                      </div>
                     </div>
                   ))}
+
                   <button
                     onClick={() => handleAddQuestion(milestoneIndex, videoIndex)}
                     className="bg-teal-500 mt-4 p-3 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
@@ -198,31 +258,24 @@ const CreateCoursePage = () => {
                     Add Question <FiCheckCircle className="ml-2 inline" />
                   </button>
                 </div>
+
+
               </div>
             ))}
-
             <button
               onClick={() => handleAddVideo(milestoneIndex)}
-              className="bg-teal-500 mt-4 p-3 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
+              className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg shadow-sm hover:bg-teal-600 focus:outline-none"
             >
-              Add Video <FiUploadCloud className="ml-2 inline" />
+              Add Video
             </button>
           </div>
         ))}
-
         <button
           onClick={handleAddMilestone}
-          className="bg-teal-500 mt-6 p-4 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200"
+          className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg shadow-sm hover:bg-teal-600 focus:outline-none"
         >
           Add Milestone
         </button>
-
-        {/* Submit Button */}
-        <div className="flex justify-center mt-8">
-          <button className="bg-teal-500 p-4 rounded-lg text-white shadow-md hover:bg-teal-600 transition duration-200">
-            Create Course
-          </button>
-        </div>
       </div>
     </div>
   );
