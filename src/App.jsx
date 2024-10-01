@@ -49,14 +49,14 @@ function App() {
           Add other routes as needed
         </Routes> */}
       </main>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={500}
         hideProgressBar={false}
         closeOnClick
         draggable
         pauseOnHover
-      />
+      /> */}
       {/* <Footer /> */}
 
     </Router>

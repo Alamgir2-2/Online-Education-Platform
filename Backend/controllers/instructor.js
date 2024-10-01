@@ -1,23 +1,30 @@
-import db from '../config/db.js'; 
+import db from '../config/db.js';
 
-// Get Instructor Profile
 export const getInstructorProfile = async (req, res) => {
+    // Check if the user is logged in and is an instructor
     if (!req.session.user || req.session.user.role !== 'Instructor') {
-        return res.status(403).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: 'Unauthorized or not an instructor' });
     }
 
+    const instructorId = req.session.user.id; // Get the logged-in user's ID
+
     try {
-        // Query the database for the logged-in instructor's data
-        const [instructor] = await db.promise().query('SELECT * FROM users WHERE id = ?', [req.session.user.id]);
+        // Fetch instructor data from the users table
+        const [rows] = await db.promise().query(
+            'SELECT id, name, email, role FROM users WHERE id = ? AND role = ?',
+            [instructorId, 'instructor']
+        );
+
+        const instructor = rows[0];
         
-        if (instructor.length === 0) {
+        if (!instructor) {
             return res.status(404).json({ message: 'Instructor not found' });
         }
-        
-        // Return the instructor profile
-        res.json(instructor[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
+
+        // Return instructor data
+        return res.status(200).json(instructor);
+    } catch (error) {
+        console.error('Error fetching instructor data:', error);
+        return res.status(500).json({ message: 'Server error' });
     }
 };

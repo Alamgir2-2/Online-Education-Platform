@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FaLock, FaPlay } from 'react-icons/fa'; // Importing icons from react-icons
 import { ToastContainer, toast } from 'react-toastify'; // Import toast for notifications
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
+// import 'react-toastify/dist/ReactToastify.css'; // Import CSS for toast notifications
 import Footer from '../../Layout/Footer/Footer';
 
 const milestones = [
@@ -242,7 +242,7 @@ const CoursePlayer = () => {
       {/* Add toast container for notifications */}
 
       <ToastContainer
-        position="top-left" // Position the toast at the top left
+        // position="top-left" // Position the toast at the top left
         autoClose={3000} // Adjust duration as needed
         hideProgressBar={true} // Optional: Hide the progress bar
         closeOnClick
@@ -258,3 +258,234 @@ const CoursePlayer = () => {
 };
 
 export default CoursePlayer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // CoursePlayer.jsx
+// import React, { useState, useRef } from 'react';
+// import { ToastContainer } from 'react-toastify';
+// import Footer from '../../Layout/Footer/Footer';
+// import Milestone from './Milestone'; // Import Milestone component
+// import Quiz from './Quiz'; // Import Quiz component
+// import WebcamTracking from './WebcamTracking'; // Import WebcamTracking component
+
+// const CoursePlayer = () => {
+//   const [milestones, setMilestones] = useState([
+//     {
+//       title: 'Milestone 1',
+//       duration: '30 mins',
+//       completed: '0/3 completed',
+//       videos: [
+//         {
+//           title: 'Introduction to Course',
+//           src: 'https://www.w3schools.com/html/mov_bbb.mp4', // Replace with actual video link
+//           duration: '10 mins',
+//           question: 'What is the main topic of this course?',
+//           options: ['A: Web Development', 'B: Data Science', 'C: Graphic Design'],
+//           answer: 0, // Correct answer index
+//         },
+//         {
+//           title: 'Chapter 1: Getting Started',
+//           src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', // Replace with actual video link
+//           duration: '10 mins',
+//           question: 'What tools do you need to get started?',
+//           options: ['A: IDE', 'B: Text Editor', 'C: Both A and B'],
+//           answer: 2, // Correct answer index
+//         },
+//         {
+//           title: 'Chapter 2: Advanced Techniques',
+//           src: 'https://www.example.com/videos/video3.mp4', // Replace with actual video link
+//           duration: '10 mins',
+//           question: 'What is a key concept discussed in this chapter?',
+//           options: ['A: API Development', 'B: UI Design', 'C: Database Management'],
+//           answer: 1, // Correct answer index
+//         },
+//       ],
+//     },
+//     // Additional milestones can be added here
+//     {
+//       title: 'Milestone 2',
+//       duration: '40 mins',
+//       completed: '0/2 completed',
+//       videos: [
+//         {
+//           title: 'Chapter 3: Frameworks',
+//           src: 'https://www.example.com/videos/video4.mp4', // Replace with actual video link
+//           duration: '20 mins',
+//           question: 'Which framework is discussed?',
+//           options: ['A: React', 'B: Vue', 'C: Angular'],
+//           answer: 0, // Correct answer index
+//         },
+//         {
+//           title: 'Chapter 4: Deployment',
+//           src: 'https://www.example.com/videos/video5.mp4', // Replace with actual video link
+//           duration: '20 mins',
+//           question: 'What is necessary for deployment?',
+//           options: ['A: Hosting', 'B: Domain', 'C: Both A and B'],
+//           answer: 2, // Correct answer index
+//         },
+//       ],
+//     },
+//   ]);
+
+//   const [expandedMilestone, setExpandedMilestone] = useState(null);
+//   const [selectedVideo, setSelectedVideo] = useState(milestones[0].videos[0]);
+//   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+//   const [currentMilestoneIndex, setCurrentMilestoneIndex] = useState(0);
+//   const [watchedVideos, setWatchedVideos] = useState(new Set());
+//   const [canProceed, setCanProceed] = useState(false);
+//   const videoRef = useRef(null);
+//   const [questionVisible, setQuestionVisible] = useState(false);
+
+//   const toggleMilestone = (index) => {
+//     setExpandedMilestone(expandedMilestone === index ? null : index);
+//   };
+
+//   const handleVideoEnd = () => {
+//     setWatchedVideos((prev) => new Set(prev).add(selectedVideo.title));
+//     setQuestionVisible(true);
+//   };
+
+//   const handleNextVideo = () => {
+//     if (currentVideoIndex < milestones[currentMilestoneIndex].videos.length - 1) {
+//       const nextVideoIndex = currentVideoIndex + 1;
+//       setCurrentVideoIndex(nextVideoIndex);
+//       setSelectedVideo(milestones[currentMilestoneIndex].videos[nextVideoIndex]);
+//       setQuestionVisible(false);
+//       setCanProceed(false);
+//     } else if (currentMilestoneIndex < milestones.length - 1) {
+//       const nextMilestoneIndex = currentMilestoneIndex + 1;
+//       setCurrentMilestoneIndex(nextMilestoneIndex);
+//       setCurrentVideoIndex(0);
+//       setSelectedVideo(milestones[nextMilestoneIndex].videos[0]);
+//       setQuestionVisible(false);
+//       setCanProceed(false);
+//     }
+//   };
+
+//   const handlePreviousVideo = () => {
+//     if (currentVideoIndex > 0) {
+//       const previousVideoIndex = currentVideoIndex - 1;
+//       setCurrentVideoIndex(previousVideoIndex);
+//       setSelectedVideo(milestones[currentMilestoneIndex].videos[previousVideoIndex]);
+//       setQuestionVisible(false);
+//     } else if (currentMilestoneIndex > 0) {
+//       const previousMilestoneIndex = currentMilestoneIndex - 1;
+//       setCurrentMilestoneIndex(previousMilestoneIndex);
+//       setCurrentVideoIndex(milestones[previousMilestoneIndex].videos.length - 1);
+//       setSelectedVideo(milestones[previousMilestoneIndex].videos[milestones[previousMilestoneIndex].videos.length - 1]);
+//       setQuestionVisible(false);
+//     }
+//   };
+
+//   return (
+//     <>
+//       <div className="flex mb-5 mt-20 gap-4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+//         {/* Left Section: Video Player */}
+//         <div className="w-3/4 flex-auto px-9">
+//           <div className="bg-black relative pb-[56.25%]">
+//             <video
+//               ref={videoRef}
+//               key={selectedVideo.src}
+//               controls
+//               className="absolute top-0 left-0 w-full h-full"
+//               onLoadedMetadata={() => {
+//                 if (videoRef.current) {
+//                   videoRef.current.play();
+//                 }
+//               }}
+//               onEnded={handleVideoEnd}
+//             >
+//               <source src={selectedVideo.src} type="video/mp4" />
+//               Your browser does not support the video tag.
+//             </video>
+//           </div>
+
+//           {/* Previous and Next Buttons */}
+//           <div className="flex justify-end gap-4 mt-4">
+//             <button
+//               onClick={handlePreviousVideo}
+//               className="bg-purple-600 hover:bg-purple-900 text-white font-bold py-2 px-4 rounded"
+//               disabled={currentVideoIndex === 0 && currentMilestoneIndex === 0}
+//             >
+//               Previous
+//             </button>
+//             <button
+//               onClick={handleNextVideo}
+//               className={`${watchedVideos.has(selectedVideo.title) && canProceed
+//                 ? 'bg-blue-600 hover:bg-blue-500'
+//                 : 'bg-gray-400'
+//               } text-white font-bold py-2 px-4 rounded`}
+//               disabled={!watchedVideos.has(selectedVideo.title) || !canProceed}
+//             >
+//               Next
+//             </button>
+//           </div>
+
+//           {/* Video Title and Description */}
+//           <div className="mt-4 text-white">
+//             <h2 className="text-xl font-bold">{selectedVideo.title}</h2>
+//             <p className="text-sm">{selectedVideo.duration}</p>
+//           </div>
+
+//           {/* Quiz Section */}
+//           {questionVisible && (
+//             <Quiz selectedVideo={selectedVideo} setCanProceed={setCanProceed} />
+//           )}
+
+//           {/* Webcam Tracking */}
+//           <WebcamTracking videoRef={videoRef} isTracking={true} setIsTracking={setCanProceed} />
+//         </div>
+
+//         {/* Right Section: Milestone List */}
+//         <div className="w-1/4 max-h-[600px] overflow-y-auto bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-8 shadow-lg rounded">
+//           {milestones.map((milestone, milestoneIndex) => (
+//             <Milestone
+//               key={milestoneIndex}
+//               milestone={milestone}
+//               index={milestoneIndex}
+//               expandedMilestone={expandedMilestone}
+//               toggleMilestone={toggleMilestone}
+//               watchedVideos={watchedVideos}
+//               setSelectedVideo={setSelectedVideo}
+//               setCurrentVideoIndex={setCurrentVideoIndex}
+//               setCurrentMilestoneIndex={setCurrentMilestoneIndex}
+//             />
+//           ))}
+//         </div>
+
+//         {/* Toast Container */}
+//         <ToastContainer
+//           position="top-left"
+//           autoClose={3000}
+//           hideProgressBar={true}
+//           closeOnClick
+//           draggable
+//           pauseOnHover
+//           style={{ marginTop: '30%', marginLeft: '20px', zIndex: 9999 }}
+//         />
+//       </div>
+//       <Footer />
+//     </>
+//   );
+// };
+
+// export default CoursePlayer;
