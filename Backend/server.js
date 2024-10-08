@@ -4,8 +4,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors'; // Import CORS
 import session from 'express-session'; // Import express-session
 import authRoutes from './routes/authRoutes.js';
-// import instructorRoutes from './routes/instructorRoutes.js';
-// import instructorRoutes from './routes/instructorRoutes.js';
+// import createCourseRoutes from './routes/createCourseRoutes.js';
+import courseDetailsRoutes from './routes/courseDetailsRoutes.js';          // Import course routes
+import { uploadCourse, uploadMiddleware } from './controllers/uploadCourseController.js';
+import blogRoutes from './routes/blogRoutes.js';
 
 dotenv.config(); // Load environment variables
 
@@ -37,8 +39,13 @@ app.use(session({
 }));
 
 // Use the auth routes
+app.use('/api/coursedetails', courseDetailsRoutes)
 // app.use(instructorRoutes);
 app.use('/api', authRoutes); // All auth routes will be prefixed with /api
+app.post('/api/upload-course', uploadMiddleware, uploadCourse);
+app.use('/api/blogs', blogRoutes);
+
+
 
 // Basic route
 app.get('/', (req, res) => {
@@ -49,4 +56,8 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+
+
 

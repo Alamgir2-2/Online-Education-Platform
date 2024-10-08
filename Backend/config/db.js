@@ -20,3 +20,4 @@ db.connect((err) => {
 });
 
 export default db; // Export the database connection for use in other files
+

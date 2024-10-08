@@ -19,10 +19,21 @@ const milestones = [
     duration: '10 h 35 m',
     completed: '68/68',
     videos: [
-      { title: 'Introduction to HTML', duration: '15 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Learn the basics of HTML and its structure.', question: 'What does HTML stand for?', options: ['Hyper Text Markup Language', 'High Text Markup Language', 'Hyper Tabular Markup Language', 'None of the above'], answer: 0 },
-      { title: 'Introduction to CSS', duration: '12 min', src: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', description: 'Understanding CSS and how to style HTML.', question: 'What does CSS stand for?', options: ['Cascading Style Sheets', 'Colorful Style Sheets', 'Creative Style Sheets', 'Computer Style Sheets'], answer: 0 },
+      { title: 'Introduction to HTML', duration: '15 min', src: 'https://samplelib.com/lib/preview/mp4/sample-5s.mp4', description: 'Learn the basics of HTML and its structure.', question: 'What does HTML stand for?', options: ['Hyper Text Markup Language', 'High Text Markup Language', 'Hyper Tabular Markup Language', 'None of the above'], answer: 0 },
+      { title: 'Introduction to CSS', duration: '12 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Understanding CSS and how to style HTML.', question: 'What does CSS stand for?', options: ['Cascading Style Sheets', 'Colorful Style Sheets', 'Creative Style Sheets', 'Computer Style Sheets'], answer: 0 },
     ],
   },
+
+  {
+    title: 'Milestone 0: Welcome To Web Course',
+    duration: '2 h 16 m',
+    completed: '14/14',
+    videos: [
+      { title: 'Welcome to Complete Web Development Course', duration: '11 min', src: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', description: 'An introduction to the complete web development course.', question: 'What is Web Development?', options: ['Creating websites', 'Cooking', 'Gardening', 'Painting'], answer: 0 },
+      { title: 'Orientation Video', duration: '14 min', src: 'https://www.w3schools.com/html/mov_bbb.mp4', description: 'Overview of the course structure and expectations.', question: 'What is the structure of this course?', options: ['HTML', 'CSS', 'JavaScript', 'All of the above'], answer: 3 },
+    ],
+  },
+
 ];
 
 const CoursePlayer = () => {

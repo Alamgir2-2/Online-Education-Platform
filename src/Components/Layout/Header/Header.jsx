@@ -107,11 +107,11 @@ const Header = () => {
         <nav className="hidden md:flex space-x-4">
           <Link to="/" className="hover:text-gray-400 pl-2">Home</Link>
           <Link to="/courses" className="hover:text-gray-400">Courses</Link>
-          <Link to="/tutorials" className="hover:text-gray-400">Tutorials</Link>
-          <Link to="/community" className="hover:text-gray-400">Community</Link>
+          {/* <Link to="/tutorials" className="hover:text-gray-400">Tutorials</Link> */}
+          {/* <Link to="/community" className="hover:text-gray-400">Community</Link> */}
           <Link to="/blog" className="hover:text-gray-400">Blog</Link>
           <Link to="/contact" className="hover:text-gray-400 pr-2">Contact</Link>
-          <Link to="/course-player" className="hover:text-gray-400">Course Player</Link>
+          {/* <Link to="/course-player" className="hover:text-gray-400">Course Player</Link> */}
         </nav>
         <div className="hidden md:flex items-center space-x-4">
           <input type="text" placeholder="Search..." className="p-2 rounded bg-gray-700 text-white" />
@@ -169,10 +169,10 @@ const Header = () => {
             <Link to="/" className="block px-4 py-2 hover:bg-gray-700">Home</Link>
             <Link to="/courses" className="block px-4 py-2 hover:bg-gray-700">Courses</Link>
             <Link to="/tutorials" className="block px-4 py-2 hover:bg-gray-700">Tutorials</Link>
-            <Link to="/community" className="block px-4 py-2 hover:bg-gray-700">Community</Link>
+            {/* <Link to="/community" className="block px-4 py-2 hover:bg-gray-700">Community</Link> */}
             <Link to="/blog" className="block px-4 py-2 hover:bg-gray-700">Blog</Link>
-            <Link to="/contact" className="block px-4 py-2 hover:bg-gray-700">Contact</Link>
-            <Link to="/course-player" className="block px-4 py-2 hover:bg-gray-700">Course Player</Link>
+            {/* <Link to="/contact" className="block px-4 py-2 hover:bg-gray-700">Contact</Link> */}
+            {/* <Link to="/course-player" className="block px-4 py-2 hover:bg-gray-700">Course Player</Link> */}
             <input type="text" placeholder="Search..." className="block px-4 py-2 rounded bg-gray-700 text-white w-full" />
             <button className="block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 w-full">Search</button>
             {user ? (

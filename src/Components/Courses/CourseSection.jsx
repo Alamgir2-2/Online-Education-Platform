@@ -2,6 +2,7 @@ import React from 'react';
 import algo from '../../assets/CourseImage/algo.png'
 import python from '../../assets/CourseImage/python.png'
 import cprogram from '../../assets/CourseImage/cprogram.jpeg'
+import { Link, Navigate } from 'react-router-dom';
 
 
 const CourseSection = () => {
@@ -11,6 +12,8 @@ const CourseSection = () => {
         { title: 'Python Course', description: 'Brief description of the course.', image: [python] },
         { title: 'C Programming', description: 'Brief description of the course.', image: [cprogram] },
     ];
+
+
 
     return (
         <section className="py-16">
@@ -29,7 +32,7 @@ const CourseSection = () => {
                             />
                             <h3 className="text-xl font-semibold py-2 m-2">{course.title}</h3>
                             <p className="mb-4">{course.description}</p>
-                            <button className="bg-blue-900 text-white p-2 rounded hover:bg-yellow-500 transition duration-300">Enroll Now</button>
+                            <Link to={'/course-outline'} className="bg-blue-900 text-white p-2 rounded hover:bg-yellow-500 transition duration-300">Course Details</Link>
                         </div>
                     ))}
                 </div>

@@ -1,9 +1,17 @@
 import React from 'react';
+import py from '../../assets/py.jpeg'
+import ai from '../../assets/ai.png'
+import Data from '../../assets/Data.jpg'
 
 const blogs = [
-    { title: 'Blog Post 1', description: 'Brief description of the blog post.', image: 'path/to/blog1.jpg' },
-    { title: 'Blog Post 2', description: 'Brief description of the blog post.', image: 'path/to/blog2.jpg' },
-    { title: 'Blog Post 2', description: 'Brief description of the blog post.', image: 'path/to/blog2.jpg' },
+    { title: 'Translations for Scientific Python projects', description: 'We are happy to announce that we have organized the necessary infrastructure and processes to allow volunteers to start translating multiple project websites. In this blog post, we will discuss how we set up manage translations for Scientific Python projects, and how you can participate in the translation and localization effort. Read more....', image: [py] },
+
+
+    { title: 'From Experimentation to Adoption', description: 'AI has captured the imagination and attention of people globally. But in the business world, the rate of adoption of artificial intelligence has lagged behind the level of interest through 2019. Even though we hear that most business leaders believe AI provides a competitive advantage, up until recently...', image: [ai] },
+
+
+
+    { title: 'Towards Data Science', description: 'Towards Data Science is a thought-provoking platform that bridges the gap between data science theory and practical application. The blog offers a rich collection of articles that cover a wide spectrum of topics, from machine learning and artificial intelligence to data visualization and statistical modeling...', image: [Data] },
     // { title: 'Blog Post 2', description: 'Brief description of the blog post.', image: 'path/to/blog2.jpg' },
 ];
 

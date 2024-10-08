@@ -5,13 +5,15 @@ import python from '../../../assets/CourseImage/python.png';
 import cprogram from '../../../assets/CourseImage/cprogram.jpeg';
 import man from '../../../assets/man.webp';
 import Footer from '../../Layout/Footer/Footer';
-import { useUser } from '../../Layout/Header/UserContext';
+import { useUser } from '../../Layout/Header/UserContext'; 
 
 // Dummy student data (you can remove this part later)
 const dummyCourses = [
-  { title: "Course A", description: "Learn the basics of Course A", image: algo },
-  { title: "Course B", description: "Learn the basics of Course B", image: python },
-  { title: "Course C", description: "Learn the basics of Course C", image: cprogram },
+  { title: "Data Structure", description: "Learn the basics of Data Structure", image: algo },
+  { title: "Learn Python", description: "Learn the basics of Python", image: python },
+  { title: "C Programming", description: "Learn the basics of C Programming", image: cprogram },
+  { title: "Applied Data Sceience", description: "Learn the basics Aplied Data Science", image: python },
+  { title: "Artificial Intelligence", description: "Learn the basics of Artificial Intelligence", image: python },
 ];
 
 const StudentDashboard = () => {
@@ -20,11 +22,11 @@ const StudentDashboard = () => {
   // const { user } = location.state || {}; // Get user data from location state
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     // navigate('/login'); // Redirect to login if user data is not available
-  //   }
-  // }, [user, navigate]);
+  useEffect(() => {
+    if (!user) {
+      navigate('/login'); // Redirect to login if user data is not available
+    }
+  }, [user, navigate]);
 
   return (
     <>
@@ -40,6 +42,7 @@ const StudentDashboard = () => {
             <div className="mt-4">
               <h1 className="text-xl font-bold text-white">{user.name || "Student Name"}</h1>
               <p className="text-gray-200">{user.email || "student@example.com"}</p>
+              <p className="text-gray-200 font-bold">Role:  {user.role}</p>
               {/* You can fetch progress from the user object when it's available */}
               <p className="text-gray-300">Progress: {/* Insert logic to fetch progress if available */}65%</p>
             </div>
@@ -57,7 +60,7 @@ const StudentDashboard = () => {
                 <img src={course.image} alt={course.title} className="w-full h-32 object-cover rounded-lg mb-2" />
                 <h3 className="text-lg font-semibold text-white">{course.title}</h3>
                 <p className="text-gray-400">{course.description}</p>
-                <Link to={`/courses/${index}`} className="text-blue-400 hover:underline mt-2 inline-block">Go to Course</Link>
+                <Link to={`/course-player`} className="text-blue-400 hover:underline mt-2 inline-block">Go to Course</Link>
               </div>
             ))}
           </div>
@@ -66,11 +69,14 @@ const StudentDashboard = () => {
         {/* Right Sidebar - Quick Links */}
         <div className="w-full lg:w-1/6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
           <h2 className="text-lg font-semibold mb-4 text-white">Quick Links</h2>
-          <Link to="/student-profile" className="block bg-blue-300 p-4 rounded-lg mb-2 shadow hover:bg-blue-500 transition duration-300">
-            View Profile
+          <Link to="/update-profile" className="block bg-purple-300 p-4 rounded-lg shadow mb-2 hover:bg-purple-500 transition duration-300">
+            Update Profile
           </Link>
-          <Link to="/progress" className="block bg-green-300 p-4 rounded-lg mb-2 shadow hover:bg-green-500 transition duration-300">
-            Track Progress
+          <Link to="/student-profile" className="block bg-blue-300 p-4 rounded-lg mb-2 shadow hover:bg-blue-500 transition duration-300">
+            View Progress
+          </Link>
+          <Link to="/course-player" className="block bg-green-300 p-4 rounded-lg mb-2 shadow hover:bg-green-500 transition duration-300">
+            Your Course
           </Link>
           <Link to="/certificates" className="block bg-yellow-300 p-4 rounded-lg mb-2 shadow hover:bg-yellow-500 transition duration-300">
             View Certificates
@@ -78,9 +84,7 @@ const StudentDashboard = () => {
           <Link to="/support" className="block bg-red-300 p-4 rounded-lg mb-2 shadow hover:bg-red-500 transition duration-300">
             Contact Support
           </Link>
-          <Link to="/update-profile" className="block bg-purple-300 p-4 rounded-lg shadow hover:bg-purple-500 transition duration-300">
-            Update Profile
-          </Link>
+          
         </div>
       </div>
       <Footer />

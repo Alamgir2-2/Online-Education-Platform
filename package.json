@@ -33,6 +33,7 @@
     "react-player": "^2.16.0",
     "react-router-dom": "^6.24.1",
     "react-toastify": "^10.0.5",
+    "react-webcam": "^7.2.0",
     "sequelize": "^6.37.3"
   },
   "devDependencies": {

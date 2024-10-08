@@ -3,15 +3,15 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import algo from '../../../assets/CourseImage/algo.png';
 import python from '../../../assets/CourseImage/python.png';
 import cprogram from '../../../assets/CourseImage/cprogram.jpeg';
-import man from '../../../assets/man.webp';
+import man from '../../../assets/photo.jpg';
 import Footer from '../../Layout/Footer/Footer';
 import { useUser } from '../../Layout/Header/UserContext';
 
 
 const dummyCourses = [
-    { title: "Course A", description: "Learn the basics of Course A", image: algo },
-    { title: "Course B", description: "Learn the basics of Course B", image: python },
-    { title: "Course C", description: "Learn the basics of Course C", image: cprogram },
+    { title: "Data Structure and Algorithm", description: "Learn the basics of Algorithm", image: algo },
+    { title: "Learn Python", description: "Learn the basics of Python ", image: python },
+    { title: "C Programming", description: "Learn the basics of C Programming", image: cprogram },
 ];
 
 
@@ -42,6 +42,7 @@ const InstructorProfilePage = () => {
                         <div className="mt-4">
                             <h1 className="text-xl font-bold text-white">{user.name}</h1>
                             <p className="text-gray-200">{user.email}</p>
+                            <p className="text-gray-200 font-bold">{user.role}</p>
                         </div>
                     </div>
                 </div>

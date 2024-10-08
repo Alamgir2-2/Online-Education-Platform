@@ -1,18 +1,110 @@
+
+// import React from 'react';
+
+// const CreateNewCourse = () => {
+//   return (
+//     <div>
+//       <div className='mt-40'>Hello</div>
+//     </div>
+//   );
+// };
+
+// export default CreateNewCourse;
+
+
 import React, { useState } from 'react';
+import axios from 'axios';
 import { FiUploadCloud, FiCheckCircle, FiXCircle } from 'react-icons/fi'; // Added FiXCircle for close icon
 
 const CreateCoursePage = () => {
   const [formData, setFormData] = useState({
     courseTitle: '',
-    thumbnail: null, // Added thumbnail to state
+    thumbnail: null,
     description: '',
     milestones: [
       {
         title: '',
-        videos: [],
+        videos: [
+          {
+            title: '',
+            file: null,
+            questions: [
+              {
+                text: '',
+                options: ['', ''],
+                correctOption: '',
+              },
+            ],
+          },
+        ],
       },
     ],
   });
+
+  const handleUpload = async () => {
+    try {
+      const formDataToSend = new FormData();
+
+      // Append course details
+      formDataToSend.append('courseTitle', formData.courseTitle);
+      formDataToSend.append('thumbnail', formData.thumbnail);
+      formDataToSend.append('description', formData.description);
+
+      // Append milestones and their videos/questions
+      formData.milestones.forEach((milestone, milestoneIndex) => {
+        formDataToSend.append(`milestones[${milestoneIndex}][title]`, milestone.title);
+
+        milestone.videos.forEach((video, videoIndex) => {
+          formDataToSend.append(
+            `milestones[${milestoneIndex}][videos][${videoIndex}][title]`,
+            video.title
+          );
+          formDataToSend.append(
+            `milestones[${milestoneIndex}][videos][${videoIndex}][file]`,
+            video.file
+          );
+
+          // Serialize questions into JSON before appending
+          video.questions.forEach((question, questionIndex) => {
+            formDataToSend.append(
+              `milestones[${milestoneIndex}][videos][${videoIndex}][questions][${questionIndex}][text]`,
+              question.text
+            );
+            question.options.forEach((option, optionIndex) => {
+              formDataToSend.append(
+                `milestones[${milestoneIndex}][videos][${videoIndex}][questions][${questionIndex}][options][${optionIndex}]`,
+                option
+              );
+            });
+            formDataToSend.append(
+              `milestones[${milestoneIndex}][videos][${videoIndex}][questions][${questionIndex}][correctOption]`,
+              question.correctOption
+            );
+          });
+        });
+      });
+
+      // Console log each entry for debugging
+      for (let [key, value] of formDataToSend.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+      // Perform the API request to your backend
+      const response = await axios.post('http://localhost:5000/api/coursedetails', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Response:', response.data);
+
+      alert(response.data.message || 'Course uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading course data:', error);
+      alert('Failed to upload course. Please try again.');
+    }
+  };
+
 
   // Handle form input change
   const handleInputChange = (e) => {
@@ -61,14 +153,14 @@ const CreateCoursePage = () => {
     setFormData({ ...formData, milestones: newMilestones });
   };
 
-// Remove question from a milestone video
-const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
-  const newMilestones = [...formData.milestones];
-  newMilestones[milestoneIndex].videos[videoIndex].questions.splice(questionIndex, 1);
-  setFormData({ ...formData, milestones: newMilestones });
-};
+  // Remove question from a milestone video
+  const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
+    const newMilestones = [...formData.milestones];
+    newMilestones[milestoneIndex].videos[videoIndex].questions.splice(questionIndex, 1);
+    setFormData({ ...formData, milestones: newMilestones });
+  };
 
-  
+
 
   const handleVideoTitleChange = (milestoneIndex, videoIndex, e) => {
     const newMilestones = [...formData.milestones];
@@ -95,6 +187,9 @@ const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
 
   const handleQuestionChange = (milestoneIndex, videoIndex, questionIndex, e) => {
     const newMilestones = [...formData.milestones];
+
+    console.log('vidoindex:', videoIndex, 'quindex:', questionIndex, 'mile:', milestoneIndex)
+
     newMilestones[milestoneIndex].videos[videoIndex].questions[questionIndex][e.target.name] = e.target.value;
     setFormData({ ...formData, milestones: newMilestones });
   };
@@ -104,6 +199,13 @@ const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
     newMilestones[milestoneIndex].videos[videoIndex].questions[questionIndex].options[optionIndex] = e.target.value;
     setFormData({ ...formData, milestones: newMilestones });
   };
+
+  // Handle upload action
+  // const handleUpload = () => {
+  //   // Implement your upload logic here
+  //   console.log('Uploading course data:', formData);
+  //   alert('Course uploaded successfully!'); // You can replace this with a proper confirmation
+  // };
 
   return (
     <div className="p-10 mt-20">
@@ -120,6 +222,19 @@ const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
               onChange={handleInputChange}
               className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
               placeholder="Enter course title"
+            />
+          </div>
+
+          {/* Course Description Section */}
+          <div className="mt-6">
+            <label className="text-white">Course Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="Enter course description"
+              rows="4"
             />
           </div>
 
@@ -216,8 +331,8 @@ const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
                       </button>
                       <input
                         type="text"
-                        name="question"
-                        value={question.question}
+                        name="text"
+                        value={question.text}
                         onChange={(e) => handleQuestionChange(milestoneIndex, videoIndex, questionIndex, e)}
                         className="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter question"
@@ -270,15 +385,29 @@ const handleRemoveQuestion = (milestoneIndex, videoIndex, questionIndex) => {
             </button>
           </div>
         ))}
+
         <button
           onClick={handleAddMilestone}
           className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg shadow-sm hover:bg-teal-600 focus:outline-none"
         >
           Add Milestone
         </button>
+
+
+        <div className='flex justify-center'>
+          <button
+            onClick={handleUpload}
+            className="px-6 py-3 bg-teal-600 text-white rounded-full shadow-lg hover:bg-teal-700 transition duration-300 flex items-center"
+          >
+            <FiUploadCloud className="mr-2" />
+            Upload Course
+          </button>
+        </div>
+
       </div>
     </div>
   );
 };
 
 export default CreateCoursePage;
+
