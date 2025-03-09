@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use CORS to allow requests from your frontend
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow your frontend origin
+    origin: ['http://localhost:5173', 'https://online-education-platform-1.onrender.com'], // Allow your frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true // Allow credentials (if needed)
 }));
@@ -33,7 +33,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         httpOnly: true,
-        secure: false,       // Set this to true if using HTTPS
+        secure: process.env.NODE_ENV === 'production', // Set this to true if using HTTPS
+        sameSite: 'none',
         maxAge: 1000 * 60 * 60 * 24 // Session lasts for 1 day
     }
 }));
