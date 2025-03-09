@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use CORS to allow requests from your frontend
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://online-education-platform-1.onrender.com'], // Allow your frontend origin
+    origin: ['http://localhost:5173', 'https://online-education-platform-3.onrender.com'], // Allow your frontend origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     credentials: true // Allow credentials (if needed)
 }));
