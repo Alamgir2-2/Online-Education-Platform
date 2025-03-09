@@ -4,7 +4,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { Line } from 'react-chartjs-2';
 import Footer from '../../Layout/Footer/Footer';
 import { useUser } from '../../Layout/Header/UserContext';
-import instructorImage from '../../../assets/photo.jpg'; // Dummy profile image for instructor
+import instructorImage from '../../../assets/women.jpg'; // Dummy profile image for instructor
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement, PointElement, Filler } from 'chart.js';
 
 // Dummy data for instructor profile

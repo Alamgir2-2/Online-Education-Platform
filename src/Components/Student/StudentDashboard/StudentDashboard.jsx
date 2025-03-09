@@ -67,7 +67,7 @@ const StudentDashboard = () => {
         </div>
 
         {/* Right Sidebar - Quick Links */}
-        <div className="w-full lg:w-1/6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+        <div className="w-full lg:w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
           <h2 className="text-lg font-semibold mb-4 text-white">Quick Links</h2>
           <Link to="/update-profile" className="block bg-purple-300 p-4 rounded-lg shadow mb-2 hover:bg-purple-500 transition duration-300">
             Update Profile

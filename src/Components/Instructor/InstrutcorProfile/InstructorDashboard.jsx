@@ -3,7 +3,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import algo from '../../../assets/CourseImage/algo.png';
 import python from '../../../assets/CourseImage/python.png';
 import cprogram from '../../../assets/CourseImage/cprogram.jpeg';
-import man from '../../../assets/photo.jpg';
+import women from '../../../assets/women.jpg';
 import Footer from '../../Layout/Footer/Footer';
 import { useUser } from '../../Layout/Header/UserContext';
 
@@ -35,7 +35,7 @@ const InstructorProfilePage = () => {
                 <div className="w-full lg:w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg mb-4 lg:mb-0 flex-shrink-0">
                     <div className="text-center mb-6">
                         <img
-                            src={man}
+                            src={women}
                             alt="Student Avatar"
                             className="rounded-full w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto"
                         />
@@ -64,7 +64,7 @@ const InstructorProfilePage = () => {
                 </div>
 
                 {/* Right Sidebar - Other Options */}
-                <div className="w-full lg:w-1/6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
+                <div className="w-full lg:w-1/4 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-lg p-8 shadow-lg">
                     <h2 className="text-lg font-semibold mb-4">Dashboard Options</h2>
                     <Link to="/manage-courses" className="block bg-green-500 p-4 rounded-lg mb-2 shadow hover:bg-green-800 transition duration-300">
                         Manage Courses
