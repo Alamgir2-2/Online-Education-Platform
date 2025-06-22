@@ -104,3 +104,11 @@ Smart Learning Platform enhances online education with webcam engagement trackin
 **Name:** Dr. Mohammd Nuruzzaman Bhuyian  
 **Position:** Assistant Professor, Institute of Information Technology  
 **Institution:** Noakhali Science and Technology University
+
+
+## 📬 Contact
+
+**Author:** Md Alamgir Hossain  
+📧 **Email:** [mahalamgir1213@gmail.com](mailto:mahalamgir1213@gmail.com)  
+🔗 **GitHub:** [@Alamgir2-2](https://github.com/Alamgir2-2)  
+🔗 **LinkedIn:** [linkedin.com/in/alamgir22](https://www.linkedin.com/in/alamgir22/)
