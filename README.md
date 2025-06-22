@@ -98,3 +98,9 @@ Smart Learning Platform enhances online education with webcam engagement trackin
 *Login Page*
 
 ---
+
+## 🧑‍🏫 Supervisor
+
+**Name:** Dr. Mohammd Nuruzzaman Bhuyian  
+**Position:** Assistant Professor, Institute of Information Technology 
+**Institution:** Noakhali Science and Technology University
