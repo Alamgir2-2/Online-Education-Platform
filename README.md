@@ -70,3 +70,16 @@ Smart Learning Platform enhances online education with webcam engagement trackin
   [Click to view Project Report](https://drive.google.com/file/d/1umLpzCsV8QQnbxYrehQ6dtIzEYe1upCE/view?usp=sharing)
 
 
+## 📸 Screenshots
+
+
+![Dashboard](./src/assets/ProjectsImage/student_dashboard.png)  
+*Student Dashboard with Progress Overview*
+
+![Course Player](./assets/screenshots/player.png)  
+*Interactive Video Player with Quiz System*
+
+![Instructor Panel](./assets/screenshots/instructor.png)  
+*Instructor Course Management Interface*
+
+---
