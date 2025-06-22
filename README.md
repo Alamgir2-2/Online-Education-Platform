@@ -95,5 +95,6 @@ Smart Learning Platform enhances online education with webcam engagement trackin
 *Sign Up Page*
 
 ![Instructor Panel](./src/assets/ProjectsImage/Login.png)  
-*Sign Up Page*
+*Login Page*
+
 ---
